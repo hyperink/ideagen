@@ -41,6 +41,7 @@ hr {
     height: 0px;
     border: none;
     border-bottom: 1px solid #ddd;
+    padding: 5px 0px;
 }
 
 #content {

@@ -7,6 +7,21 @@ $def with (results=None)
   <form method="POST" action="/">
     <table>
       <tr>
+	<td><input type="checkbox" name="wtt" checked="checked" /></td>
+	<td>Twitter - What The Trends</td>
+      </tr>
+      <tr>
+	<td><input type="checkbox" name="digg" /></td>
+	<td>Digg - In Progress</td>
+      </tr>
+      <tr>
+	<td></td>
+	<td><input type="submit" value="Trend Me!"/></td>
+      </tr>
+    </table>
+    <!--
+    <table>
+      <tr>
 	<td>
 	  google username:
 	</td>
@@ -46,6 +61,7 @@ $def with (results=None)
 	</td>
       </tr>
     </table>
+    -->
   </form>
 
   <h2 class="heading heading-yellow">1. Google Trends Results</h2>
@@ -59,9 +75,16 @@ $def with (results=None)
 
   <h2 class="heading heading-red">Final Score</h2>
   $if results:
-    <p>
-      $results
-    </p>
-
+      $if results.get("wtt", None):
+          <p>Date: $results['wtt']['as_of']</p>
+	  $for trend in results['wtt']['trends']:
+   	      <table>
+		$for feature in trend:
+  		    <tr>
+	              <td><strong>$feature</strong></td>
+	              <td>$trend[feature]</td>
+		    </tr>
+	      </table>
+	      <hr/>
 </div>
 
