@@ -1,7 +1,7 @@
 import web
 import urllib
 import simplejson as json
-from apis import pyGTrends
+from apis.pyGTrends import pyGTrends
 #from subapps import api_app as api_app
 
 GLOBALNAME = "Hyperink Trends"
@@ -48,13 +48,12 @@ class Index:
     def POST(self):
         i = web.input()
         usr = i['google_username']
-        #pwd = i['google_password']
-        #kwarg1 = i['kwarg1']
-        #kwarg2 = i['kwarg2']
-        #connector = pyGTrends(usr, pwd)
-        #connector.download_report((kwarg1, kwarg2))
-        #print connector.csv()
-        return render.index(usr)
+        pwd = i['google_password']
+        kwarg1 = i['kwarg1']
+        kwarg2 = i['kwarg2']
+        connector = pyGTrends(usr, pwd)
+        connector.download_report((kwarg1, kwarg2))        
+        return render.index(connector.csv())
 
 class Error:
     def GET (self, err):
