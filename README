@@ -1,0 +1,8 @@
+Hyperink Trends
+===============
+
+This readme explains how to launch our framework
+
+1. cd Hypertrends
+2. python main.py 8080
+3. use chromium-browser or firefox to navigate to localhost

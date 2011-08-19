@@ -1,0 +1,55 @@
+
+html {
+    background-color: #eee;
+    font-family: helvetica;
+}
+
+h1 {
+    margin: 0px;
+}
+
+h2.heading {
+    padding: 5px;
+}
+
+h2.heading-yellow {
+    background-color: #fa0;
+}
+
+h2.heading-red {
+    background-color: #f52;
+}
+
+h2.heading-blue {
+    background-color: #ace;
+}
+
+h2.heading-green {
+    background-color: #491;
+}
+
+.google-trends {
+    margin: 0 auto;
+    width: 350px;
+}
+
+hr {
+    height: 0px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+
+#content {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    margin: 20px auto;
+    width: 1000px;
+}
+
+.roundcorners {
+    -moz-border-radius: 6px;
+    -khtml-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
