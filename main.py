@@ -44,15 +44,17 @@ app.add_processor(web.loadhook(session_hook))
 class Index:
     def GET(self):
         return render.index()
-        #i = web.input()
-        #usr = i['google_username']
+
+    def POST(self):
+        i = web.input()
+        usr = i['google_username']
         #pwd = i['google_password']
         #kwarg1 = i['kwarg1']
         #kwarg2 = i['kwarg2']
         #connector = pyGTrends(usr, pwd)
         #connector.download_report((kwarg1, kwarg2))
         #print connector.csv()
-
+        return render.index(usr)
 
 class Error:
     def GET (self, err):

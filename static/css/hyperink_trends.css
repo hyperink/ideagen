@@ -20,6 +20,10 @@ h2.heading-red {
     background-color: #f52;
 }
 
+h2.heading-grey {
+    background-color: #eee;
+}
+
 h2.heading-blue {
     background-color: #ace;
 }
