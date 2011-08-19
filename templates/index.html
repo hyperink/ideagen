@@ -1,12 +1,68 @@
-$def with ()
+$def with (results=None)
 
 <div id="content" class="roundcorners">
   <h1>HyperTrends</h1>
 
-  <h2 class="heading heading-red">Final Score</h2>
-  <p>
-    ?
-  </p>
+  <h2 class="heading heading-grey">Trend Me!</h2>
+  <form method="POST" action="/">
+    <table>
+      <tr>
+	<td><input type="checkbox" name="wtt" checked="checked" /></td>
+	<td>Twitter - What The Trends</td>
+      </tr>
+      <tr>
+	<td><input type="checkbox" name="digg" /></td>
+	<td>Digg - In Progress</td>
+      </tr>
+      <tr>
+	<td></td>
+	<td><input type="submit" value="Trend Me!"/></td>
+      </tr>
+    </table>
+    <!--
+    <table>
+      <tr>
+	<td>
+	  google username:
+	</td>
+	<td>
+	  <input type="text" name="google_username" />
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  google password:
+	</td>
+	<td>
+	  <input type="password" name="google_password" />
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  Keyword 1	  
+	</td>
+	<td>
+	  <input type="text" name="kwarg1" />
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  Keyword 2
+	</td>
+	<td>
+	  <input type="text" name="kwarg2" />
+	</td>
+      </tr>
+      <tr>
+	<td>
+	</td>
+	<td>
+	  <input type="submit" value="Trend Me!" />
+	</td>
+      </tr>
+    </table>
+    -->
+  </form>
 
   <h2 class="heading heading-yellow">1. Google Trends Results</h2>
   <div class="google-trends">
@@ -17,8 +73,18 @@ $def with ()
 
   <h2 class="heading heading-green">3. Facebook</h2>
 
-
-
-
+  <h2 class="heading heading-red">Final Score</h2>
+  $if results:
+      $if results.get("wtt", None):
+          <p>Date: $results['wtt']['as_of']</p>
+	  $for trend in results['wtt']['trends']:
+   	      <table>
+		$for feature in trend:
+  		    <tr>
+	              <td><strong>$feature</strong></td>
+	              <td>$trend[feature]</td>
+		    </tr>
+	      </table>
+	      <hr/>
 </div>
 
