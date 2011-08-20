@@ -1,3 +1,4 @@
+import os
 import json
 import urllib2
 
@@ -30,6 +31,24 @@ def histogram(diggDict):
 
 def test(l=3):
     return histogram(get_top(l=l))
+
+def get_stories():
+    if(os.path.exists('results.json')): # check if flatfile exists
+        f = open('results.json', 'rw')
+        results = f.read()
+        f.close()
+    else: # get results and save to disk
+        f = open('results.json', 'w')
+        results = json.dumps(get_top(l=9999))
+        f.write(results)
+        f.close()
+    return json.loads(results)['stories']
+
+def get_corpus(attribute="title"):
+    # maps story list -> [story attribute list]
+    stories = get_stories()
+    # results is a list of all results 
+    return map(lambda story: story[attribute], stories)
 
 """
 Example Response:

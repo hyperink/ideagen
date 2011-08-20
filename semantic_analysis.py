@@ -1,3 +1,4 @@
+import digg_api
 import gensim
 from os import system
 from gensim import corpora, models, similarities
@@ -55,11 +56,20 @@ def findTopics(dictionary, texts, topics, lda=False, passes=20):
     """ prints topic table given a dictionary, text corpus and topic count """
     topics = float(topics)
     corpus = [dictionary.doc2bow(text) for text in texts]
-    id2word = dictionary.id2token
+    id2word = dictionary
     if not lda:
-        result = gensim.models.lsimodel.LsiModel(corpus=corpus, id2word=id2word, \
-                numTopics=topics)
+        result = gensim.models.lsimodel.LsiModel(corpus=corpus, id2word=id2word, num_topics=topics)
     else:
         passes = int(passes)
-        result = gensim.models.ldamodel.LdaModel(corpus=corpus, id2word=id2word, numTopics=topics, update_every=0, passes=passes)
+        result = gensim.models.ldamodel.LdaModel(corpus=corpus, id2word=id2word, num_topics=topics, update_every=0, passes=passes)
+    return result
+
+def do_digg(lda=False, topicNum=20, passes=5, printOut=False):
+    texts, dictionary = processText(digg_api.get_corpus())
+    result = findTopics(dictionary=dictionary, 
+                        texts=texts, 
+                        topics=topicNum, 
+                        lda=lda)
+    if printOut:
+        result.print_topics(topicNum)
     return result
