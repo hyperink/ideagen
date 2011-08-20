@@ -1,3 +1,5 @@
+from apis.pyGTrends import pyGTrends
+
 def get_google_trends(i, api_key=None, api_url=None):
     """
     This is uses an unsupported third party library to connect via
@@ -10,4 +12,4 @@ def get_google_trends(i, api_key=None, api_url=None):
     kwarg2 = getattr(i, 'kwarg2', None)
     connector = pyGTrends(usr, pwd)
     connector.download_report((kwarg1, kwarg2))        
-    return render.index(connector.csv())
+    return connector.csv()

@@ -1,9 +1,9 @@
 import web
 import json
-from apis.pyGTrends import pyGTrends
 from apis import wtt
 from apis import google
 #from apis import digg_api
+import digg_api as digg
 from collections import defaultdict
 
 #from subapps import api_app as api_app
@@ -73,7 +73,11 @@ class Index:
             if callback:
                 api_key = APIs[key]['key']
                 api_url = APIs[key]['url']
-                trends[key] = getattr(globals()[key], 'get_' + key +'_trends', None)(api_key=api_key,api_url=api_url)
+
+                if key == "digg":
+                    trends[key] = digg.get_corpus()
+                else:
+                    trends[key] = getattr(globals()[key], 'get_' + key +'_trends', None)(i, api_key=api_key, api_url=api_url)
 
         #trends = self.get_wtt_trends()
         #self.get_google_trends(i)

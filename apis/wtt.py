@@ -4,7 +4,7 @@ from utils.stopwords import STOP_WORDS
 import urllib2
 import json
 
-def get_wtt_trends(api_key, api_url, getJSON=True):
+def get_wtt_trends(i=None, api_key=None, api_url=None, getJSON=True):
     """
     Issues a GET call using What The Trend's REST interface and
     returns results in JSON (or text if getJSON set to false)

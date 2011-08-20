@@ -52,6 +52,10 @@ hr {
     width: 1000px;
 }
 
+#googletable {
+    display: none;
+}
+
 .roundcorners {
     -moz-border-radius: 6px;
     -khtml-border-radius: 6px;

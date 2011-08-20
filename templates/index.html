@@ -1,7 +1,8 @@
 $def with (results=None)
 
+$var js: /static/js/trends.js
 <div id="content" class="roundcorners">
-  <h1>HyperTrends</h1>
+  <h1>Hyperlink Trends</h1>
 
   <h2 class="heading heading-grey">Trend Me!</h2>
   <form method="POST" action="/">
@@ -11,16 +12,16 @@ $def with (results=None)
 	<td>Twitter - What The Trends</td>
       </tr>
       <tr>
+	<td><input type="checkbox" name="google" id="googlecheck" /></td>
+	<td>Google</td>
+      </tr>
+      <tr>
 	<td><input type="checkbox" name="digg" /></td>
 	<td>Digg - In Progress</td>
       </tr>
-      <tr>
-	<td></td>
-	<td><input type="submit" value="Trend Me!"/></td>
-      </tr>
     </table>
-    <!--
-    <table>
+
+    <table id="googletable">
       <tr>
 	<td>
 	  google username:
@@ -56,12 +57,9 @@ $def with (results=None)
       <tr>
 	<td>
 	</td>
-	<td>
-	  <input type="submit" value="Trend Me!" />
-	</td>
       </tr>
     </table>
-    -->
+    <input type="submit" value="Trend Me!"/>
   </form>
 
   <h2 class="heading heading-yellow">1. Google Trends Results</h2>
@@ -69,11 +67,16 @@ $def with (results=None)
     <iframe src="http://www.gmodules.com/ig/ifr?url=http://www.google.com/ig/modules/trends_gadget.xml&amp;source=imag&amp;up_is_init=true&amp;up_cur_term=Adam+Lambert,+Allison+Iraheta,+Danny+Gokey,+Kris+Allen&amp;up_date=mtd&amp;up_region=US" style="border:1px solid #ccc; padding:10px;" width="330" height="250" frameborder="0" scrolling="no"></iframe>
   </div>
 
-  <h2 class="heading heading-blue">2. Craigslist</h2>
-
-  <h2 class="heading heading-green">3. Facebook</h2>
+  $#<h2 class="heading heading-blue">2. Craigslist</h2>
+  $#<h2 class="heading heading-green">3. Facebook</h2>
 
   $if results:
+      $if results.get("digg", None):
+          <h2 class="heading heading-blue">Digg It</h2>
+          $results['digg']
+      $if results.get("google", None):
+          <h2 class="heading heading-blue">Google Trends</h2>
+          $results['google']
       $if results.get("wtt", None):
           <h2 class="heading heading-red">What The Trends?</h2>
           <p>Date: $results['wtt']['as_of']</p>
