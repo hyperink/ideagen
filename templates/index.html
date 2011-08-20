@@ -76,6 +76,8 @@ $def with (results=None)
   <h2 class="heading heading-red">Final Score</h2>
   $if results:
       $if results.get("wtt", None):
+          <p><strong>Most Frequent Words:</strong> 
+	    $results['wtt']['freq']
           <p>Date: $results['wtt']['as_of']</p>
 	  $for trend in results['wtt']['trends']:
    	      <table>
