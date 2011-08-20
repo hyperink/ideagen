@@ -1,0 +1,33 @@
+def get_wtt_trends(self, getJSON=True):
+    """
+    Issues a GET call using What The Trend's REST interface and
+    returns results in JSON (or text if getJSON set to false)
+        """
+    api_key = APIs['wtt']['key']
+    url = APIs['wtt']['url']
+    data = urllib2.urlopen(url).read()
+    if getJSON:
+        data = json.loads(data)
+        data['freq'] = self.get_wtt_trends_freq(data)
+    return data
+
+def get_wtt_trends_freq(self, data):
+    """
+    Takes the results of the What The Trends API, prunes each
+    trend description for important words, and returns frequency
+    information to determine the most important keywords and
+    topics.
+    """
+    trends = data['trends']
+    tags = []
+    for trend in trends:
+        desc = trend.get('description', None)
+        if desc:
+            words = desc.get('text', None)
+            if words:
+                tags = tags + prune(words.split(), STOP_WORDS)
+    if tags:
+        d = defaultdict(int)
+        for tag in tags:
+                d[tag] += 1
+    return d

@@ -73,12 +73,13 @@ $def with (results=None)
 
   <h2 class="heading heading-green">3. Facebook</h2>
 
-  <h2 class="heading heading-red">Final Score</h2>
   $if results:
       $if results.get("wtt", None):
+          <h2 class="heading heading-red">What The Trends?</h2>
+          <p>Date: $results['wtt']['as_of']</p>
           <p><strong>Most Frequent Words:</strong> 
 	    $results['wtt']['freq']
-          <p>Date: $results['wtt']['as_of']</p>
+	  <hr/>
 	  $for trend in results['wtt']['trends']:
    	      <table>
 		$for feature in trend:
@@ -88,5 +89,7 @@ $def with (results=None)
 		    </tr>
 	      </table>
 	      <hr/>
+      $elif results.get("digg", None):
+          <h2 class="heading heading-red">Digg Integration - In Progress</h2>
 </div>
 
