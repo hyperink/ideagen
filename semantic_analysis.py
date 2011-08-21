@@ -3,6 +3,8 @@ import gensim
 from os import system
 from gensim import corpora, models, similarities
 from operator import itemgetter, attrgetter
+import utils
+from utils.stopwords import STOP_WORDS
 
 #import large document file from books.py
 """
@@ -19,11 +21,11 @@ HOWTO:
 def processText(corpus):
     """ returns texts and dictionary given corpus """
     #remove stopwords words # disabled
-    punctuations = set('')
+    punctuations = set('\" : , . & / ; ! ( ) [ ] |')
 
-    #punctuations = set('\" : - , . & / ; ! ( )')
+    sw = STOP_WORDS + ['pic', 'pics','video', 'venturebeat']
 
-    stopwords = set('for a of the and to in with'.split())
+    stopwords = set(sw)
 
     #removes punctuations
     for string in enumerate(corpus):
@@ -52,18 +54,19 @@ def removePunctuations(string, punctuations):
         string = " ".join(string.split())
     return string
 
-def findTopics(dictionary, texts, topics, lda=False, passes=20):
+def findTopics(dictionary, texts, topics, lda=False, passes=5):
     """ prints topic table given a dictionary, text corpus and topic count """
-    topics = float(topics)
+    topics = int(topics)
     corpus = [dictionary.doc2bow(text) for text in texts]
     id2word = dictionary
     if not lda:
-        result = gensim.models.lsimodel.LsiModel(corpus=corpus, id2word=id2word, num_topics=topics)
+        result = gensim.models.lsimodel.LsiModel(corpus=corpus, id2word=id2word, numTopics=10)
     else:
         passes = int(passes)
-        result = gensim.models.ldamodel.LdaModel(corpus=corpus, id2word=id2word, num_topics=topics, update_every=0, passes=passes)
+        result = gensim.models.ldamodel.LdaModel(corpus=corpus,
+                id2word=id2word, numTopics=topics, update_every=0,
+                passes=passes)
     return result
-
 
 """
 Example data structures
@@ -79,12 +82,16 @@ def train(corpus, lda=False, topicNum=20, passes=5, printOut=False):
       >>> trained_model = do_training(['cat came home', 'dog went home', ...])
     """
     texts, dictionary = processText(corpus)
+
+def do_digg(lda=True, topicNum=20, passes=1, printOut=True):
+    texts, dictionary = processText(digg_api.get_corpus())
     result = findTopics(dictionary=dictionary, 
                         texts=texts, 
-                        topics=topicNum, 
-                        lda=lda)
+                        topics=topicNum,
+                        lda=lda,
+                        passes=passes)
     if printOut:
-        result.print_topics(topicNum)
+        result.printTopics(topicNum)
     return result
 
 def findtopic(content, model):
