@@ -2,6 +2,8 @@ import os
 import json
 import urllib2
 
+DIGG_FILE = 'digg_results.json'
+
 def trendspotter(l=33):
     """
     Goal:
@@ -9,12 +11,12 @@ def trendspotter(l=33):
     """
     pass
 
-def get_top(l=999):
+def get_top(l=9999, window='recent'):
     """
     Performs HTTP GET over top news stories from digg, returns dictionary of results
 
     """
-    qurl = 'http://services.digg.com/2.0/story.getTopNews?limit=%s' % int(l)
+    qurl = 'http://services.digg.com/2.0/story.getTopNews?limit=%s&window=%s' % (int(l), window)
     response = urllib2.urlopen(qurl).read()
     return json.loads(response)
 
@@ -33,13 +35,13 @@ def test(l=3):
     return histogram(get_top(l=l))
 
 def get_stories():
-    if(os.path.exists('results.json')): # check if flatfile exists
-        f = open('results.json', 'rw')
+    if(os.path.exists(DIGG_FILE)): # check if flatfile exists
+        f = open(DIGG_FILE, 'rw')
         results = f.read()
         f.close()
     else: # get results and save to disk
-        f = open('results.json', 'w')
-        results = json.dumps(get_top(l=9999))
+        f = open(DIGG_FILE, 'w')
+        results = json.dumps(get_top(l=99999))
         f.write(results)
         f.close()
     return json.loads(results)['stories']
