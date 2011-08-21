@@ -2,7 +2,7 @@ $def with (results=None)
 
 $var js: /static/js/trends.js
 <div id="content" class="roundcorners">
-  <h1>Hyperlink Trends</h1>
+  <h1>Hyperink Trends</h1>
 
   <h2 class="heading heading-grey">Trend Me!</h2>
   <form method="POST" action="/">
@@ -16,7 +16,7 @@ $var js: /static/js/trends.js
 	<td>Google</td>
       </tr>
       <tr>
-	<td><input type="checkbox" name="digg" /></td>
+	<td><input type="checkbox" name="digg" id="digg" /></td>
 	<td>Digg - In Progress</td>
       </tr>
     </table>
@@ -59,19 +59,23 @@ $var js: /static/js/trends.js
 	</td>
       </tr>
     </table>
-    <input type="submit" value="Trend Me!"/>
+    <input type="submit" name="submitme" id="submitme" value="Trend Me!"/>
   </form>
 
+  <!--
   <h2 class="heading heading-yellow">1. Google Trends Results</h2>
   <div class="google-trends">
     <iframe src="http://www.gmodules.com/ig/ifr?url=http://www.google.com/ig/modules/trends_gadget.xml&amp;source=imag&amp;up_is_init=true&amp;up_cur_term=Adam+Lambert,+Allison+Iraheta,+Danny+Gokey,+Kris+Allen&amp;up_date=mtd&amp;up_region=US" style="border:1px solid #ccc; padding:10px;" width="330" height="250" frameborder="0" scrolling="no"></iframe>
   </div>
-
-  $#<h2 class="heading heading-blue">2. Craigslist</h2>
-  $#<h2 class="heading heading-green">3. Facebook</h2>
+  -->
 
   $if results:
       $if results.get("digg", None):
+          <!--
+             <h2 class="heading heading-blue">Relevant Search Results</h2>
+	     <div id="result">
+	     </div>
+	  -->
           <h2 class="heading heading-blue">Digg It</h2>
           $results['digg']
       $if results.get("google", None):

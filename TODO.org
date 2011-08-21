@@ -1,0 +1,40 @@
+* Hyperink Tr
+
+
+* Unique Author -> Ranking
+
+
+* "Hot Topics" Suggestions
+
+
+Perform classification come up with a score
+
+How can we factor money into this
+
+* Topic Validation
+- Amazon, Online Book stores, NY Times, ibook store -- see sales 
+
+
+* Question and Answers
+- contact contributors
+- determine which questions and answers are good
+- how many people follow a topic?
+
+GOAL: Train a LDA classifier to take some 'content' and return a
+topic_id and a metric
+
+1. Data Sources (JSON)
+2. List of three-tuples
+entries = [('key', 'content', heuristic-rank-metric), ... ]
+3. Content List: Create LDA input
+- List containing str(content) from each tuple
+4. Content List used to train black box LDA
+- Output is a trained LDA classifier model
+5. Map each entry onto a new tuple entry + topic_id
+6. Reduce list of new entries into list of tuples
+[(topic_id, sum(heuristic-rank-metric)), ... ]
+7. Sort this list based on heuristic-rank-metric
+
+
+
+NOTE: heuristic-rank-metric is diggs, # up votes, etc.

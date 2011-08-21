@@ -2,6 +2,7 @@ import web
 import json
 from apis import wtt
 from apis import google
+#from subapps import middleware_app
 #from apis import digg_api
 import digg_api as digg
 from collections import defaultdict
@@ -25,6 +26,7 @@ if web.config.debug:
 
 # url mapping
 urls = (
+#    '/api',  middleware_app.subapp,
     '/?',    "Index", #weseeyou_app.subapp,
     '/(.*)', "Error",
     )

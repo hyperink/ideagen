@@ -1,7 +1,7 @@
 
 
 $(function() {	
-	$("#googlecheck").click(function(){
+	$("#googlecheck").click(function(){		
 		$('#googletable').toggle();
 	    });
     });

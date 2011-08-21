@@ -64,8 +64,21 @@ def findTopics(dictionary, texts, topics, lda=False, passes=20):
         result = gensim.models.ldamodel.LdaModel(corpus=corpus, id2word=id2word, num_topics=topics, update_every=0, passes=passes)
     return result
 
-def do_digg(lda=False, topicNum=20, passes=5, printOut=False):
-    texts, dictionary = processText(digg_api.get_corpus())
+
+"""
+Example data structures
+  corpus: ['content', 'content2', 'content3', ...]
+  entry: (key, content, metric)
+  classified entry: (key, content, metric, topic)
+"""
+
+def train(corpus, lda=False, topicNum=20, passes=5, printOut=False):
+    """
+    corpus -> trained model
+    usage:
+      >>> trained_model = do_training(['cat came home', 'dog went home', ...])
+    """
+    texts, dictionary = processText(corpus)
     result = findTopics(dictionary=dictionary, 
                         texts=texts, 
                         topics=topicNum, 
@@ -73,3 +86,28 @@ def do_digg(lda=False, topicNum=20, passes=5, printOut=False):
     if printOut:
         result.print_topics(topicNum)
     return result
+
+def findtopic(content, model):
+  """
+  Classifies a piece of content into a most likely topic
+  (content, model) -> topic_id
+
+  usage:
+    >>> topic_id = findtopic("This is an example new title", model)
+  """
+  def getmax(topic_list):
+    return 1
+  topics = model[bow(content)] # a list of topic probabilities
+  return getmax(topics) # most probable topic
+
+def classify(entries, model):
+  """
+  Takes entries (3 tuple) + model 
+  (entries, model) -> (classified_entries) (4 tuple)
+
+  usage:
+    >>> classified_entries = classify(entries, train(corpus))
+  """
+  map(entries, lambda entry: (entry[0], entry[1], entry[2], findtopic(entry[1], model)))
+  pass
+

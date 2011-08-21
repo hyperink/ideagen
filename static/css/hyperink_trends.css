@@ -62,3 +62,7 @@ hr {
     -webkit-border-radius: 6px;
     border-radius: 6px;
 }
+
+#results {
+    display: none;
+}
