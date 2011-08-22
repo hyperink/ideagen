@@ -559,8 +559,10 @@ class LdaModel(interfaces.TransformationABC):
             # print all topics if `topics` is negative
             topics = self.numTopics
         topics = min(topics, self.numTopics)
+        result = []
         for i in xrange(topics):
-            self.printTopic(i, topN=topN)
+            result.append(self.printTopic(i, topN=topN))
+        return dict(result)
 
 
     def printTopic(self, topicid, topN=10):
@@ -569,6 +571,7 @@ class LdaModel(interfaces.TransformationABC):
         bestn = numpy.argsort(topic)[::-1][:topN]
         beststr = ['%.3f*%s' % (topic[id], self.id2word[id]) for id in bestn]
         logger.info("topic #%i: %s" % (topicid, ' + '.join(beststr)))
+        return (topicid, ' '.join([self.id2word[id] for id in bestn]))
 
 
     def __getitem__(self, bow, eps=0.01):

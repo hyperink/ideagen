@@ -11,7 +11,7 @@ def trendspotter(l=33):
     """
     pass
 
-def get_top(l=9999, window='recent'):
+def get_top(l=9999, window='month'):
     """
     Performs HTTP GET over top news stories from digg, returns dictionary of results
 
@@ -41,10 +41,17 @@ def get_stories():
         f.close()
     else: # get results and save to disk
         f = open(DIGG_FILE, 'w')
-        results = json.dumps(get_top(l=99999))
+        results = json.dumps(get_top(l=9999999))
         f.write(results)
         f.close()
     return json.loads(results)['stories']
+
+def get_entries(attribute="title", metric="diggs"):
+  """
+  maps stories to generic entry format
+  {"stories": [stories]} -> [(key, content, metric), ...]
+  """
+  return map(lambda story: (story["story_id"], story[attribute], story[metric]), get_stories())
 
 def get_corpus(attribute="title"):
     # maps story list -> [story attribute list]

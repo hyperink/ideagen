@@ -430,15 +430,19 @@ class LsiModel(interfaces.TransformationABC):
         c = numpy.asarray(self.projection.u.T[topicNo, :]).flatten()
         norm = numpy.sqrt(numpy.sum(c * c))
         most = numpy.abs(c).argsort()[::-1][:topN]
-        return ' + '.join(['%.3f*"%s"' % (1.0 * c[val] / norm, self.id2word[val]) for val in most])
+        #print(' + '.join(['%.3f*"%s"' % (1.0 * c[val] / norm, self.id2word[val]) for val in most]))
+        return (topicNo, ' '.join([self.id2word[val] for val in most]))
 
 
     def printTopics(self, numTopics = 5, numWords = 10):
+        result = []
         for i in xrange(min(numTopics, self.numTopics)):
             if i < len(self.projection.s):
+                result.append(self.printTopic(i, topN=numWords))
                 logger.info("topic #%i(%.3f): %s" %
                             (i, self.projection.s[i],
-                             self.printTopic(i, topN = numWords)))
+                             str(self.printTopic(i, topN = numWords))))
+        return dict(result)
 
 
     def printDebug(self, numTopics=5, numWords=10):

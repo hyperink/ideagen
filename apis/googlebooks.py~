@@ -1,0 +1,6 @@
+
+def get_googlebooks_trends(api_key=None, api_url=None):
+    pass
+
+def get_googlebooks_trends_entries(api_key=None, api_url=None):
+    pass

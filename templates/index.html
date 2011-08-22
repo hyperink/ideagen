@@ -12,6 +12,17 @@ $var js: /static/js/trends.js
 	<td>Twitter - What The Trends</td>
       </tr>
       <tr>
+	<td><input type="checkbox" name="nytimes" checked="checked" /></td>
+	<td>
+	  NY Times 
+	  <select name="whichny">
+	    <option name="popular">popular</option>
+	    <option name="bestseller">bestseller</option>
+	    <option name="community">community</option>
+	  </select>
+	</td>
+      </tr>
+      <tr>
 	<td><input type="checkbox" name="google" id="googlecheck" /></td>
 	<td>Google</td>
       </tr>
@@ -78,6 +89,9 @@ $var js: /static/js/trends.js
 	  -->
           <h2 class="heading heading-blue">Digg It</h2>
           $results['digg']
+      $if results.get("nytimes", None):
+          <h2 class="heading heading-blue">NYTimes $results['nytimes']['title']</h2>
+          $results['nytimes']['entries']
       $if results.get("google", None):
           <h2 class="heading heading-blue">Google Trends</h2>
           $results['google']
@@ -86,6 +100,9 @@ $var js: /static/js/trends.js
           <p>Date: $results['wtt']['as_of']</p>
           <p><strong>Most Frequent Words:</strong> 
 	    $results['wtt']['freq']
+	  <hr/>
+          <p><strong>Entries:</strong> 
+	    $results['wtt']['entries']
 	  <hr/>
 	  $for trend in results['wtt']['trends']:
    	      <table>
