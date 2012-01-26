@@ -12,25 +12,28 @@ THINGS = ["mostemailed", "mostshared" ,"mostviewed"]
 def get_url(offset, thing="mostemailed"):
     return "http://api.nytimes.com/svc/mostpopular/v2/%s/all-sections/30?offset=%s&api-key=434edd0950e1662f9e41a6cbdb9aa8dd:5:64718441" % (thing, offset)
 
-def get_number(offset, thing="mostemailed"):
-    result = get_content(offset, thing)
+def get_all_url(offset, thing=None):
+    return "http://api.nytimes.com/svc/news/v3/content/all/all?limit=20&offset=%s&api-key=27a70f681464614c08ff47b2d4c2cb18:10:65558121" % offset
+
+def get_number(offset, thing="mostemailed", make_url=get_url):
+    result = get_content(offset, thing, make_url=make_url)
     return result['num_results']
 
-def get_content(offset, thing="mostemailed"):
-    url_in = get_url(offset, thing)
+def get_content(offset, thing="mostemailed", make_url=get_url):
+    url_in = make_url(offset, thing)
     url = urllib2.urlopen(url_in)
     response = url.read()
     url.close()
     result = json.loads(response)
     return result
 
-def get_all(thing="mostemailed"):
+def get_all(thing="mostemailed", make_url=get_url):
     number = get_number(0, thing)
     results = []
     final = get_content(0)
     for i in range(int(math.ceil(number / 20))):
         offset = i * 20
-        print("Pinging: %s" % get_url(offset, thing))
+        print("Pinging: %s" % make_url(offset, thing))
         results += get_content(offset)["results"]
         sleep(1)
     final["results"] = results
@@ -57,6 +60,21 @@ def parse(filename):
 
 def hello(filename):
     print("Hello, %s" % filename)
+
+def newswire(filename=None):
+    number = get_number(0, thing=None, make_url=get_all_url)
+    results = []
+    for i in range(int(math.ceil(number / 20))):
+        offset = i * 20
+        try:
+            query = get_content(offset, make_url=get_all_url)
+            result = json.dumps(query)
+        except:
+            result = ""
+
+        sleep(2)
+
+        print(result)
 
 if __name__ == "__main__":
     filename = sys.argv[1] if len(sys.argv) > 1 else 'output.json'
